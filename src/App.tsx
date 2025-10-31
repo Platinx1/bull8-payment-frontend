@@ -2,9 +2,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from
 import PaymentsTable from './page/PaymentTable';
 import { useEffect, useState } from "react";
 import { validateUser } from "./hooks/validateUser";
-import Header from "./components/Header";
+// import Header from "./components/Header";
 import UnauthorizedPage from './page/UnauthorizedPage';
-import PricingPage from './page/PricingPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import Loader from './components/Loader';
 import UserPaymentDetail from './components/UserPaymentDetails';
@@ -68,7 +67,7 @@ function App() {
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
     </Routes>
 
-    <Header />
+
 
     <ValidateUserOnLoad onFinish={() => setLoading(false)} />
 

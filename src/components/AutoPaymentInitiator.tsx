@@ -39,7 +39,7 @@ const AutoPaymentInitiator = () => {
             // Redirect only on successful transaction
             if (userData?.domainName && userData?.userId) {
               const domain = userData.domainName.replace(/\/$/, '');
-              const redirectUrl = `${domain}/payment?userId=${userData.userId}&status=success`;
+              const redirectUrl = `${domain}/transaction_status?userId=${userData.userId}&status=success`;
               console.log('Redirecting to:', redirectUrl);
               window.location.href = redirectUrl;
             } else {
@@ -54,7 +54,16 @@ const AutoPaymentInitiator = () => {
             setPaymentState('error');
           },
           () => {
-            setPaymentState('cancel');
+            // Redirect to domain URL on payment cancel
+            if (userData?.domainName && userData?.userId) {
+              const domain = userData.domainName.replace(/\/$/, '');
+              const redirectUrl = `${domain}/transaction_status?userId=${userData.userId}&status=cancelled`;
+              console.log('Redirecting to:', redirectUrl);
+              window.location.href = redirectUrl;
+            } else {
+              console.log('Cannot redirect: missing userData fields');
+              setPaymentState('cancel');
+            }
           }
         );
       } catch (err) {
