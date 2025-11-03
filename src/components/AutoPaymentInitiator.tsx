@@ -25,7 +25,7 @@ const AutoPaymentInitiator = () => {
 
       setPaymentState('processing');
       
-      const keyId = 'rzp_live_RKwUDP9xiVHswR'; // You can move this to config
+      const keyId = 'rzp_live_RKwUDP9xiVHswR'; 
       
       try {
         await initiatePayment(
@@ -39,7 +39,7 @@ const AutoPaymentInitiator = () => {
             // Redirect only on successful transaction
             if (userData?.domainName && userData?.userId) {
               const domain = userData.domainName.replace(/\/$/, '');
-              const redirectUrl = `${domain}?userId=${userData.userId}&status=success`;
+              const redirectUrl = `${domain}?userId=${userData.userId}&status=success&paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}&signature=${response.razorpay_signature}&name=${encodeURIComponent(userData.name)}&email=${encodeURIComponent(userData.email)}&contact=${userData.contact}&ctclId=${userData.ctclId}&plan=${userData.plan}`;
               window.location.href = redirectUrl;
             } else {
               console.log('Cannot redirect: missing userData fields');
@@ -56,7 +56,7 @@ const AutoPaymentInitiator = () => {
             // Redirect to domain URL on payment cancel
             if (userData?.domainName && userData?.userId) {
               const domain = userData.domainName.replace(/\/$/, '');
-              const redirectUrl = `${domain}?userId=${userData.userId}&status=cancelled`;
+              const redirectUrl = `${domain}?userId=${userData.userId}&status=cancelled&name=${encodeURIComponent(userData.name)}&email=${encodeURIComponent(userData.email)}&contact=${userData.contact}&ctclId=${userData.ctclId}&plan=${userData.plan}`;
               console.log('Redirecting to:', redirectUrl);
               window.location.href = redirectUrl;
             } else {
