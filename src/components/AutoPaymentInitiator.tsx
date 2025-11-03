@@ -39,8 +39,7 @@ const AutoPaymentInitiator = () => {
             // Redirect only on successful transaction
             if (userData?.domainName && userData?.userId) {
               const domain = userData.domainName.replace(/\/$/, '');
-              const redirectUrl = `${domain}/transaction_status?userId=${userData.userId}&status=success`;
-              console.log('Redirecting to:', redirectUrl);
+              const redirectUrl = `${domain}?userId=${userData.userId}&status=success`;
               window.location.href = redirectUrl;
             } else {
               console.log('Cannot redirect: missing userData fields');
@@ -57,7 +56,7 @@ const AutoPaymentInitiator = () => {
             // Redirect to domain URL on payment cancel
             if (userData?.domainName && userData?.userId) {
               const domain = userData.domainName.replace(/\/$/, '');
-              const redirectUrl = `${domain}/transaction_status?userId=${userData.userId}&status=cancelled`;
+              const redirectUrl = `${domain}?userId=${userData.userId}&status=cancelled`;
               console.log('Redirecting to:', redirectUrl);
               window.location.href = redirectUrl;
             } else {
