@@ -9,6 +9,7 @@ interface UserData {
   domainName: string;
   ctclId: string;
   plan: string;
+  amount: any;
 }
 
 interface UserContextType {

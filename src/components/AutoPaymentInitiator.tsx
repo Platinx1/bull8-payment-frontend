@@ -14,6 +14,7 @@ const AutoPaymentInitiator = () => {
   const [paymentData, setPaymentData] = useState<RazorpayResponse | null>(null);
   const { userData } = useUser();
   const { initiatePayment, isLoading, error } = useRazorpay();
+  console.log(userData,'from the auto payment initiator')
 
   useEffect(() => {
     const initiateAutoPayment = async () => {
@@ -39,7 +40,7 @@ const AutoPaymentInitiator = () => {
             // Redirect only on successful transaction
             if (userData?.domainName && userData?.userId) {
               const domain = userData.domainName.replace(/\/$/, '');
-              const redirectUrl = `${domain}?userId=${userData.userId}&status=success&paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}&signature=${response.razorpay_signature}&name=${encodeURIComponent(userData.name)}&email=${encodeURIComponent(userData.email)}&contact=${userData.contact}&ctclId=${userData.ctclId}&plan=${userData.plan}`;
+              const redirectUrl = `${domain}?userId=${userData.userId}&status=success&paymentId=${response.razorpay_payment_id}&orderId=${response.razorpay_order_id}&signature=${response.razorpay_signature}&name=${encodeURIComponent(userData.name)}&email=${encodeURIComponent(userData.email)}&contact=${userData.contact}&ctclId=${userData.ctclId}&plan=${userData.plan}&amount=${userData.amount}`;
               window.location.href = redirectUrl;
             } else {
               console.log('Cannot redirect: missing userData fields');
@@ -56,7 +57,7 @@ const AutoPaymentInitiator = () => {
             // Redirect to domain URL on payment cancel
             if (userData?.domainName && userData?.userId) {
               const domain = userData.domainName.replace(/\/$/, '');
-              const redirectUrl = `${domain}?userId=${userData.userId}&status=cancelled&name=${encodeURIComponent(userData.name)}&email=${encodeURIComponent(userData.email)}&contact=${userData.contact}&ctclId=${userData.ctclId}&plan=${userData.plan}`;
+              const redirectUrl = `${domain}?userId=${userData.userId}&status=cancelled&name=${encodeURIComponent(userData.name)}&email=${encodeURIComponent(userData.email)}&contact=${userData.contact}&ctclId=${userData.ctclId}&plan=${userData.plan}&amount=${userData.amount}`;
               console.log('Redirecting to:', redirectUrl);
               window.location.href = redirectUrl;
             } else {
@@ -138,3 +139,5 @@ const AutoPaymentInitiator = () => {
 };
 
 export default AutoPaymentInitiator;
+     
+            
