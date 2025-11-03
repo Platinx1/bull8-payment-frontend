@@ -1,8 +1,6 @@
-
-
 const config = {
   development: {
-    BASE_URL: "http://localhost:3000",
+    BASE_URL: "http://localhost:3000/api/",
     ENV: "development",
     VERSION:"v1/"
   },
@@ -17,7 +15,7 @@ const config = {
     VERSION:"v1/"
   },
 };
+ export const apiConfig=config.development;  
 
- export const apiConfig=config.testing;  
 
 
