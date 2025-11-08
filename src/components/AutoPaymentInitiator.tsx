@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRazorpay } from '../hooks/useRazorpay';
 import { useUser } from '../contexts/UserContext';
 import { RazorpayResponse } from '../types/razorpay';
@@ -15,6 +15,9 @@ const AutoPaymentInitiator = () => {
   const { userData } = useUser();
   const { initiatePayment, isLoading, error } = useRazorpay();
   console.log(userData,'from the auto payment initiator')
+  
+  // Add ref to track if payment has been initiated
+  const hasInitiatedPayment = useRef(false);
 
   useEffect(() => {
     const initiateAutoPayment = async () => {
@@ -72,15 +75,17 @@ const AutoPaymentInitiator = () => {
       }
     };
 
-    // Only initiate payment if user is authenticated and we haven't started yet
-    if (userData && paymentState === 'loading') {
+    // Only initiate payment if user is authenticated, we haven't started yet, and we're in loading state
+    if (userData && paymentState === 'loading' && !hasInitiatedPayment.current) {
+      hasInitiatedPayment.current = true;
       initiateAutoPayment();
     }
-  }, [userData, initiatePayment, paymentState]);
+  }, [userData, paymentState]);
 
   const handleNewPayment = () => {
     setPaymentState('loading');
     setPaymentData(null);
+    hasInitiatedPayment.current = false; // Reset the flag for new payment attempts
   };
 
   const handleRetry = () => {
