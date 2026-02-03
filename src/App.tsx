@@ -21,6 +21,7 @@ function App() {
 
   function ValidateUserOnLoad({ onFinish }) {
     const query = useQuery();
+    const brokerId = query.get("brokerId");
     const data = query.get("data");
     const sig = query.get("sig");
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ function App() {
   
       (async () => {
         try {
-          const res = await validateUser(data, sig);
+          const res = await validateUser(brokerId, data, sig);
            console.log(res,'from the  validate api response fron the app ')
           if (res?.success && res?.data?.userData) {
 
@@ -53,7 +54,7 @@ function App() {
           onFinish();
         }
       })();
-    }, [data, sig, navigate, onFinish, setUserData, userData]);
+    }, [brokerId, data, sig, navigate, onFinish, setUserData, userData]);
   
     return null;
   }
