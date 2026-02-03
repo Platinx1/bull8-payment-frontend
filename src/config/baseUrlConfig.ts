@@ -15,7 +15,7 @@ const config = {
     VERSION:"v1/"
   },
 };
- export const apiConfig=config.production;  
+ export const apiConfig=config.production;
 
 
 

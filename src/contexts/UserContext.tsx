@@ -10,6 +10,7 @@ interface UserData {
   ctclId: string;
   plan: string;
   amount: any;
+  fundSize: string;
 }
 
 interface UserContextType {
